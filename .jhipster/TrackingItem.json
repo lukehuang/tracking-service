@@ -1,0 +1,44 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "event",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "data",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "timeStamp",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "trackingId",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "ipHash",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "locale",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180201233742",
+    "dto": "no",
+    "service": "serviceImpl",
+    "entityTableName": "tracking_item",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no",
+    "microserviceName": "tracking",
+    "searchEngine": false
+}
