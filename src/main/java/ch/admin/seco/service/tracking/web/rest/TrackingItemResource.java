@@ -1,6 +1,5 @@
 package ch.admin.seco.service.tracking.web.rest;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,10 +36,8 @@ import ch.admin.seco.service.tracking.web.rest.util.HeaderUtil;
 @RequestMapping("/api")
 public class TrackingItemResource {
 
-    private final Logger log = LoggerFactory.getLogger(TrackingItemResource.class);
-
     private static final String ENTITY_NAME = "trackingItem";
-
+    private final Logger log = LoggerFactory.getLogger(TrackingItemResource.class);
     private final TrackingItemService trackingItemService;
 
     public TrackingItemResource(TrackingItemService trackingItemService) {
@@ -57,7 +53,7 @@ public class TrackingItemResource {
      */
     @PostMapping("/tracking-items")
     @Timed
-    public ResponseEntity<TrackingItem> createTrackingItem(@Valid @RequestBody TrackingItem trackingItem, HttpServletRequest request) throws URISyntaxException {
+    public ResponseEntity<TrackingItem> createTrackingItem(@Valid @RequestBody TrackingItem trackingItem, HttpServletRequest request) {
         log.debug("REST request to save TrackingItem : {}", trackingItem);
         if (trackingItem.getId() != null) {
             throw new BadRequestAlertException("A new trackingItem cannot already have an ID", ENTITY_NAME, "idexists");
@@ -92,8 +88,8 @@ public class TrackingItemResource {
     @Timed
     public ResponseEntity<TrackingItem> getTrackingItem(@PathVariable UUID id) {
         log.debug("REST request to get TrackingItem : {}", id);
-        TrackingItem trackingItem = trackingItemService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(trackingItem));
+        Optional<TrackingItem> trackingItem = trackingItemService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(trackingItem);
     }
 
     /**

@@ -20,11 +20,11 @@ For further instructions on how to develop with JHipster, have a look at [Using 
 
 To optimize the tracking application for production, run:
 
-    ./gradlew -Pprod clean bootRepackage
+    ./gradlew -Pprod clean bootJar
 
 To ensure everything worked, run:
 
-    java -jar build/libs/*.war
+    java -jar build/libs/*.jar
 
 
 Refer to [Using JHipster in production][] for more details.
@@ -52,7 +52,7 @@ To stop it and remove the container, run:
 You can also fully dockerize your application and all the services that it depends on.
 To achieve this, first build a docker image of your app by running:
 
-    ./gradlew bootRepackage -Pprod buildDocker
+    ./gradlew bootJar -Pprod buildDocker
 
 Then run:
 

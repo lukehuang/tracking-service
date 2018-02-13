@@ -1,10 +1,10 @@
 package ch.admin.seco.service.tracking.config;
 
-import ch.admin.seco.service.tracking.security.AuthoritiesConstants;
-import ch.admin.seco.service.tracking.security.jwt.JWTConfigurer;
-import ch.admin.seco.service.tracking.security.jwt.TokenProvider;
+import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +13,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.data.repository.query.SecurityEvaluationContextExtension;
-import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
+
+import ch.admin.seco.service.tracking.security.AuthoritiesConstants;
+import ch.admin.seco.service.tracking.security.jwt.JWTConfigurer;
+import ch.admin.seco.service.tracking.security.jwt.TokenProvider;
 
 @Configuration
 @Import(SecurityProblemSupport.class)
@@ -31,7 +34,7 @@ public class MicroserviceSecurityConfiguration extends WebSecurityConfigurerAdap
     }
 
     @Override
-    public void configure(WebSecurity web) throws Exception {
+    public void configure(WebSecurity web) {
         web.ignoring()
             .antMatchers(HttpMethod.OPTIONS, "/**")
             .antMatchers("/app/**/*.{js,html}")
@@ -45,6 +48,7 @@ public class MicroserviceSecurityConfiguration extends WebSecurityConfigurerAdap
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // @formatter:off
         http
             .csrf()
             .disable()
@@ -63,18 +67,20 @@ public class MicroserviceSecurityConfiguration extends WebSecurityConfigurerAdap
             .antMatchers(HttpMethod.POST, "/api/tracking-items").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/health").permitAll()
+            .antMatchers("/management/info").permitAll()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/swagger-resources/configuration/ui").permitAll()
         .and()
             .apply(securityConfigurerAdapter());
-    }
-
-    private JWTConfigurer securityConfigurerAdapter() {
-        return new JWTConfigurer(tokenProvider);
+        // @formatter:on
     }
 
     @Bean
     public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
         return new SecurityEvaluationContextExtension();
+    }
+
+    private JWTConfigurer securityConfigurerAdapter() {
+        return new JWTConfigurer(tokenProvider);
     }
 }

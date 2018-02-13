@@ -2,6 +2,7 @@ package ch.admin.seco.service.tracking.service.impl;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -62,9 +63,9 @@ public class TrackingItemServiceImpl implements TrackingItemService {
      */
     @Override
     @Transactional(readOnly = true)
-    public TrackingItem findOne(UUID id) {
+    public Optional<TrackingItem> findOne(UUID id) {
         log.debug("Request to get TrackingItem : {}", id);
-        return trackingItemRepository.findOne(id);
+        return trackingItemRepository.findById(id);
     }
 
     /**
@@ -75,6 +76,6 @@ public class TrackingItemServiceImpl implements TrackingItemService {
     @Override
     public void delete(UUID id) {
         log.debug("Request to delete TrackingItem : {}", id);
-        trackingItemRepository.delete(id);
+        trackingItemRepository.deleteById(id);
     }
 }

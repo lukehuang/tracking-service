@@ -2,6 +2,8 @@ package ch.admin.seco.service.tracking.security;
 
 import ch.admin.seco.service.tracking.config.Constants;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
     @Override
-    public String getCurrentAuditor() {
-        return SecurityUtils.getCurrentUserLogin().orElse(Constants.SYSTEM_ACCOUNT);
+    public Optional<String> getCurrentAuditor() {
+        return Optional.ofNullable(SecurityUtils.getCurrentUserLogin().orElse(Constants.SYSTEM_ACCOUNT));
     }
 }

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +25,7 @@ public class PaginationUtilUnitTest {
     public void generatePaginationHttpHeadersTest() {
         String baseUrl = "/api/_search/example";
         List<String> content = new ArrayList<>();
-        Page<String> page = new PageImpl<>(content, new PageRequest(6, 50), 400L);
+        Page<String> page = new PageImpl<>(content, PageRequest.of(6, 50), 400L);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, baseUrl);
         List<String> strHeaders = headers.get(HttpHeaders.LINK);
         assertNotNull(strHeaders);
@@ -32,9 +33,9 @@ public class PaginationUtilUnitTest {
         String headerData = strHeaders.get(0);
         assertTrue(headerData.split(",").length == 4);
         String expectedData = "</api/_search/example?page=7&size=50>; rel=\"next\","
-                + "</api/_search/example?page=5&size=50>; rel=\"prev\","
-                + "</api/_search/example?page=7&size=50>; rel=\"last\","
-                + "</api/_search/example?page=0&size=50>; rel=\"first\"";
+            + "</api/_search/example?page=5&size=50>; rel=\"prev\","
+            + "</api/_search/example?page=7&size=50>; rel=\"last\","
+            + "</api/_search/example?page=0&size=50>; rel=\"first\"";
         assertEquals(expectedData, headerData);
         List<String> xTotalCountHeaders = headers.get("X-Total-Count");
         assertTrue(xTotalCountHeaders.size() == 1);

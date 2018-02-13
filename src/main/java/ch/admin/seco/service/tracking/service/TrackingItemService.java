@@ -1,8 +1,10 @@
 package ch.admin.seco.service.tracking.service;
 
-import ch.admin.seco.service.tracking.domain.TrackingItem;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+
+import ch.admin.seco.service.tracking.domain.TrackingItem;
 
 /**
  * Service Interface for managing TrackingItem.
@@ -30,7 +32,7 @@ public interface TrackingItemService {
      * @param id the id of the entity
      * @return the entity
      */
-    TrackingItem findOne(UUID id);
+    Optional<TrackingItem> findOne(UUID id);
 
     /**
      * Delete the "id" trackingItem.

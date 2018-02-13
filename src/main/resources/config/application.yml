@@ -24,12 +24,12 @@ eureka:
         instance-info-replication-interval-seconds: 10
         registry-fetch-interval-seconds: 10
     instance:
-        appname: tracking
-        instanceId: tracking:${spring.application.instance-id:${random.value}}
+        appname: trackingservice
+        instanceId: trackingservice:${spring.application.instance-id:${random.value}}
         lease-renewal-interval-in-seconds: 5
         lease-expiration-duration-in-seconds: 10
-        status-page-url-path: ${management.context-path}/info
-        health-check-url-path: ${management.context-path}/health
+        status-page-url-path: ${management.endpoints.web.base-path}/info
+        health-check-url-path: ${management.endpoints.web.base-path}/health
         metadata-map:
             zone: primary # This is needed for the load balancer
             profile: ${spring.profiles.active}
@@ -54,9 +54,13 @@ hystrix:
     share-security-context: true
 
 management:
-    security:
-        roles: ADMIN
-    context-path: /management
+    endpoints:
+        web:
+            base-path: /management
+            expose: '*'
+    endpoint:
+        health:
+            show-details: true
     info:
         git:
             mode: full
@@ -65,7 +69,7 @@ management:
             enabled: false # When using the MailService, configure an SMTP server and set this to true
 spring:
     application:
-        name: tracking
+        name: trackingservice
     jackson:
         serialization.write_dates_as_timestamps: false
     jpa:
@@ -81,10 +85,7 @@ spring:
         favicon:
             enabled: false
     thymeleaf:
-        mode: XHTML
-security:
-    basic:
-        enabled: false
+        mode: HTML
 
 server:
     session:
@@ -115,11 +116,11 @@ jhipster:
         #allow-credentials: true
         #max-age: 1800
     mail:
-        from: tracking@localhost
+        from: trackingservice@localhost
     swagger:
         default-include-pattern: /api/.*
-        title: tracking API
-        description: tracking API documentation
+        title: trackingservice API
+        description: trackingservice API documentation
         version: 0.0.1
         terms-of-service-url:
         contact-name:
@@ -139,4 +140,4 @@ jhipster:
 # http://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-application:
+# application:
