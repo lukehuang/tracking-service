@@ -31,11 +31,13 @@ public class TrackingItem implements Serializable {
     private UUID id;
 
     @NotNull
-    @Column(name = "event", nullable = false)
+    @Column(name = "event_name", nullable = false)
+    // todo: rename to eventName
     private String event;
 
-    @Column(name = "data")
+    @Column(name = "event_data")
     @JsonRawValue
+    // todo: rename to eventData
     private String data;
 
     @Column(name = "time_stamp")
