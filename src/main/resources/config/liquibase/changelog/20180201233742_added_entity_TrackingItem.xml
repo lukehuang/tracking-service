@@ -21,11 +21,11 @@
             <column name="id" type="uuid">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="event" type="varchar(255)">
+            <column name="event_name" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
 
-            <column name="data" type="varchar(255)">
+            <column name="event_data" type="varchar(4000)">
                 <constraints nullable="true" />
             </column>
 
