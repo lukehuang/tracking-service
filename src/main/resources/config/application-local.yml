@@ -1,0 +1,9 @@
+spring:
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:postgresql://localhost:5432/tracking
+        username: tracking
+        password:
+    cloud:
+        discovery:
+            enabled: false

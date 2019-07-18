@@ -1,0 +1,9 @@
+version: '3'
+services:
+    batch-postgresql:
+        image: postgres:9.6.5
+        environment:
+            - POSTGRES_USER=tracking
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432
