@@ -9,6 +9,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-@PreAuthorize("hasRole(T(ch.admin.seco.alv.service.tracking.service.security.Role).ADMIN.value)")
+@PreAuthorize("hasRole(T(ch.admin.seco.alv.service.tracking.service.security.Role).SYSADMIN.value)")
 public @interface IsSysAdmin {
 }
