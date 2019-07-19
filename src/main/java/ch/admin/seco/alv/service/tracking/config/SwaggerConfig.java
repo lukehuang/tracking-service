@@ -24,49 +24,50 @@ import org.springframework.context.annotation.Configuration;
 @EnableSwagger2
 class SwaggerConfig {
 
-	@Value("${management.endpoints.web.base-path}")
-	String managementContextPath;
+    @Value("${management.endpoints.web.base-path}")
+    String managementContextPath;
 
-	@Bean
-	public Docket publicApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.select()
-				.paths(regex("/api/.*"))
-				.build()
-				.directModelSubstitute(LocalDate.class, java.sql.Date.class)
-				.directModelSubstitute(LocalDateTime.class, java.util.Date.class)
-				.securityContexts(Collections.singletonList(securityContext()))
-				.securitySchemes(Collections.singletonList(apiKey()));
-	}
+    @Bean
+    public Docket publicApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .select()
+            .paths(regex("/api/.*"))
+            .build()
+            .directModelSubstitute(LocalDate.class, java.sql.Date.class)
+            .directModelSubstitute(LocalDateTime.class, java.util.Date.class)
+            .securityContexts(Collections.singletonList(securityContext()))
+            .securitySchemes(Collections.singletonList(apiKey()));
+    }
 
-	@Bean
-	public Docket managementApi() {
-		return new Docket(DocumentationType.SWAGGER_2)
-				.groupName("manage-api")
-				.select()
-				.paths(regex(managementContextPath + ".*"))
-				.build()
-				.ignoredParameterTypes(Map.class)
-				.securityContexts(Collections.singletonList(securityContext()))
-				.securitySchemes(Collections.singletonList(apiKey()));
-	}
+    @Bean
+    public Docket managementApi() {
+        return new Docket(DocumentationType.SWAGGER_2)
+            .groupName("manage-api")
+            .select()
+            .paths(regex(managementContextPath + ".*"))
+            .build()
+            .ignoredParameterTypes(Map.class)
+            .securityContexts(Collections.singletonList(securityContext()))
+            .securitySchemes(Collections.singletonList(apiKey()));
+    }
 
-	List<SecurityReference> defaultAuth() {
-		AuthorizationScope authorizationScope
-				= new AuthorizationScope("global", "accessEverything");
-		AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-		authorizationScopes[0] = authorizationScope;
-		return Collections.singletonList(
-				new SecurityReference("JWT", authorizationScopes));
-	}
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", "Authorization", "header");
+    }
 
-	private ApiKey apiKey() {
-		return new ApiKey("JWT", "Authorization", "header");
-	}
+    private SecurityContext securityContext() {
+        return springfox.documentation.spi.service.contexts.SecurityContext.builder()
+            .securityReferences(defaultAuth())
+            .build();
+    }
 
-	private SecurityContext securityContext() {
-		return springfox.documentation.spi.service.contexts.SecurityContext.builder()
-				.securityReferences(defaultAuth())
-				.build();
-	}
+
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope
+            = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Collections.singletonList(
+            new SecurityReference("JWT", authorizationScopes));
+    }
 }
