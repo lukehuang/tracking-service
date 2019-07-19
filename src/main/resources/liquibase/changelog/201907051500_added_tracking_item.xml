@@ -3,6 +3,9 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
 
+    <property name="textType" value="text" dbms="postgresql"/>
+    <property name="textType" value="varchar(8000)" dbms="h2"/>
+
     <changeSet id="201907051500-01" author="mabi">
         <createTable tableName="tracking_item">
             <column name="id" type="uuid">
@@ -12,7 +15,7 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="event_data" type="varchar(4000)">
+            <column name="event_data" type="${textType}">
                 <constraints nullable="true"/>
             </column>
 
