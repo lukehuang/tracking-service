@@ -2,11 +2,9 @@ server:
     port: 8080
 
 spring:
-
     jpa:
         properties:
             hibernate.jdbc.lob.non_contextual_creation: true
-
     liquibase:
         change-log: classpath:/liquibase/master.xml
         enabled: true
@@ -20,3 +18,7 @@ management:
     endpoint:
         health:
             show-details: always
+
+info:
+    project:
+        version: @project.version@

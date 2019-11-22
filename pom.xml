@@ -11,14 +11,14 @@
     </parent>
     <groupId>ch.admin.seco.alv.service.tracking</groupId>
     <artifactId>tracking-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>tracking-service</name>
     <description>Tracking service</description>
 
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-        <alv-shared-library-version>0.0.1-build-123</alv-shared-library-version>
+        <alv-shared-library-version>0.0.1-build-159</alv-shared-library-version>
         <springfox-swagger2.version>2.8.0</springfox-swagger2.version>
     </properties>
 
@@ -151,6 +151,18 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>build-info</id>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
