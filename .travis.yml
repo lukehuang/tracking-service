@@ -27,6 +27,8 @@ script:
         "-${TRAVIS_BRANCH//\//-}")
     - export BUILD_VERSION=$PROJECT_VERSION-build-$TRAVIS_BUILD_NUMBER$BRANCH_VERSION_SUFFIX
     - ".ci-travis/maven-set-version.sh ${BUILD_VERSION}"
+install:
+  - "./mvnw --settings ./.mvn/wrapper/settings.xml install -DskipTests=true"
 deploy:
     - provider: script
       skip_cleanup: true
