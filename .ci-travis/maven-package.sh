@@ -4,4 +4,4 @@
 source ~/.nvm/nvm.sh
 
 echo "Building Maven artifacts..."
-./mvnw package -DskipITs=true
+./mvnw  --settings ./.mvn/wrapper/settings.xml package -DskipITs=true

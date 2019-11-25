@@ -8,4 +8,4 @@ echo "Using build version: $BUILD_VERSION..."
 source ~/.nvm/nvm.sh
 
 echo "Setting the project version (mvn and npm) to the version: $BUILD_VERSION.."
-./mvnw versions:set -DnewVersion=$BUILD_VERSION
+./mvnw --settings ./.mvn/wrapper/settings.xml versions:set -DnewVersion=$BUILD_VERSION
