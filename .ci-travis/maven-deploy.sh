@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export ARTIFACTORY_USERNAME=$1
-export ARTIFACTORY_PASSWORD=$2
+ARTIFACTORY_USERNAME=$1
+ARTIFACTORY_PASSWORD=$2
 
 echo "Using artifactory username: $ARTIFACTORY_USERNAME..."
 echo "Using artifactory password: $ARTIFACTORY_PASSWORD..."
