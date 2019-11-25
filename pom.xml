@@ -183,7 +183,7 @@
 
     <repositories>
         <repository>
-            <id>libs-releases</id>
+            <id>central</id>
             <name>libs-releases</name>
             <url>https://alvch.jfrog.io/alvch/libs-releases</url>
             <snapshots>
@@ -191,7 +191,7 @@
             </snapshots>
         </repository>
         <repository>
-            <id>libs-snapshots</id>
+            <id>snapshots</id>
             <name>libs-snapshots</name>
             <url>https://alvch.jfrog.io/alvch/libs-snapshots</url>
             <snapshots>
@@ -202,7 +202,7 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>plugins-releases</id>
+            <id>central</id>
             <name>plugins-releases</name>
             <url>https://alvch.jfrog.io/alvch/plugins-releases</url>
             <snapshots>
@@ -210,7 +210,7 @@
             </snapshots>
         </pluginRepository>
         <pluginRepository>
-            <id>plugins-snapshots</id>
+            <id>snapshots</id>
             <name>plugins-snapshots</name>
             <url>https://alvch.jfrog.io/alvch/plugins-snapshots</url>
             <snapshots>
