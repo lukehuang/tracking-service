@@ -73,7 +73,7 @@ pipeline {
 
                 // copy resources for docker build
                 sh '''
-                    cp "${WORKSPACE}/tracking-service/target/tracking-service.jar" "${WORKSPACE}/openshift/"
+                    cp "${WORKSPACE}/target/tracking-service.jar" "${WORKSPACE}/openshift/"
                 '''
             }
         }
