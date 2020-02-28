@@ -168,12 +168,12 @@ pipeline {
                 }
             }
         }
+    }
 
-        post('Publish Test Reports') {
-            always {
-                junit allowEmptyResults: true, testResults: '**/surefire-reports/**/*.xml'
-                junit allowEmptyResults: true, testResults: '**/failsafe-reports/**/*.xml'
-            }
+    post('Publish Test Reports') {
+        always {
+            junit allowEmptyResults: true, testResults: '**/surefire-reports/**/*.xml'
+            junit allowEmptyResults: true, testResults: '**/failsafe-reports/**/*.xml'
         }
     }
 }
