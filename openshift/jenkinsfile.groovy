@@ -18,7 +18,7 @@ pipeline {
         NAMESPACE_NAME = "jobroom-dev"
         DOCKER_BUILD_NAME = "tracking-service-docker"
         PROJECT_NAME = "tracking-service"
-        APP_NAME = "trackingservice"
+        APP_NAME = "tracking-service"
         ARTIFACT_VERSION = "${new Date().format("YYYY-MM-dd")}.${BUILD_NUMBER}"
     }
 
