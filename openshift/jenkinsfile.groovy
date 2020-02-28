@@ -160,7 +160,7 @@ pipeline {
                                 openshift.withProject("${NAMESPACE_NAME}") {
                                     def microServiceDeploymentConfig = openshift.selector('dc', "${PROJECT_NAME}")
                                     if (!microServiceDeploymentConfig.exists()) {
-                                        openshift.apply(readFile("deployment-config.yml"))
+                                        openshift.apply(readFile("openshift/deployment-config.yml"))
 
                                     }
                                     timeout(5) {
