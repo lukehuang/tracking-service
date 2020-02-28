@@ -94,7 +94,6 @@ pipeline {
                         openshift.withProject('jobroom-dev') {
                             def templateNames = [
                                     'microservice-app-build-config-docker-template',
-                                    'batch-app-build-config-docker-template'
                             ]
 
                             templateNames.each {
@@ -132,35 +131,37 @@ pipeline {
             }
         }
 
-        parallel {
-            stage('Sonar Analysis') {
-                when {
-                    branch 'master'
+        stage('Analyse code & deploy Docker image') {
+            parallel {
+                stage('Sonar Analysis') {
+                    when {
+                        branch 'master'
+                    }
+
+                    steps {
+                        echo 'Running Sonar analysis...'
+                        rtMavenRun(
+                                pom: 'pom.xml',
+                                goals: 'sonar:sonar -Dsonar.projectKey=OnlineFormService -Dsonar.host.url="$SONAR_SERVER" -Dsonar.login=$SONAR_LOGIN',
+                                deployerId: "MAVEN_DEPLOYER",
+                                resolverId: "MAVEN_RESOLVER"
+                        )
+                    }
                 }
 
-                steps {
-                    echo 'Running Sonar analysis...'
-                    rtMavenRun(
-                            pom: 'pom.xml',
-                            goals: 'sonar:sonar -Dsonar.projectKey=OnlineFormService -Dsonar.host.url="$SONAR_SERVER" -Dsonar.login=$SONAR_LOGIN',
-                            deployerId: "MAVEN_DEPLOYER",
-                            resolverId: "MAVEN_RESOLVER"
-                    )
-                }
-            }
+                stage('Deploy Docker Image') {
+                    when {
+                        branch 'feature/openshift'
+                    }
 
-            stage('Deploy Docker Image') {
-                when {
-                    branch 'feature/openshift'
-                }
-
-                steps {
-                    script {
-                        openshift.withCluster() {
-                            openshift.withProject("${NAMESPACE_NAME}") {
-                                def microServiceDeploymentConfig = openshift.selector('dc', "${PROJECT_NAME}")
-                                microServiceDeploymentConfig.rollout().latest()
-                                microServiceDeploymentConfig.rollout().status()
+                    steps {
+                        script {
+                            openshift.withCluster() {
+                                openshift.withProject("${NAMESPACE_NAME}") {
+                                    def microServiceDeploymentConfig = openshift.selector('dc', "${PROJECT_NAME}")
+                                    microServiceDeploymentConfig.rollout().latest()
+                                    microServiceDeploymentConfig.rollout().status()
+                                }
                             }
                         }
                     }
