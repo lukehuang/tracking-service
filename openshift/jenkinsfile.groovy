@@ -159,8 +159,14 @@ pipeline {
                             openshift.withCluster() {
                                 openshift.withProject("${NAMESPACE_NAME}") {
                                     def microServiceDeploymentConfig = openshift.selector('dc', "${PROJECT_NAME}")
-                                    microServiceDeploymentConfig.rollout().latest()
-                                    microServiceDeploymentConfig.rollout().status()
+                                    if (!microServiceDeploymentConfig.exists()) {
+                                        openshift.apply(readFile("deployment-config.yml"))
+
+                                    }
+                                    timeout(5) {
+                                        microServiceDeploymentConfig.rollout().latest()
+                                        microServiceDeploymentConfig.rollout().status()
+                                    }
                                 }
                             }
                         }
