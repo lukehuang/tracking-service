@@ -1,0 +1,39 @@
+kind: List
+metadata: {}
+apiVersion: v1
+items:
+    - kind: DeploymentConfig
+      apiVersion: apps.openshift.io/v1
+      metadata:
+          labels:
+              app: tracking-service
+          name: tracking-service
+      spec:
+          replicas: 1
+          selector:
+              app: tracking-service
+              deploymentconfig: tracking-service
+          strategy:
+              resources: {}
+          template:
+              metadata:
+                  labels:
+                      app: tracking-service
+                      deploymentconfig: tracking-service
+              spec:
+                  containers:
+                      - image: 'docker-registry.default.svc:5000/jobroom-dev/tracking-service:latest'
+                        name: tracking-service
+                        ports:
+                          - containerPort: 8080
+                            protocol: TCP
+                        resources:
+                          requests:
+                            cpu: 2m
+                            memory: 128Mi
+                          limits:
+                            cpu: 20m
+                            memory: 512Mi
+          test: false
+          triggers:
+              - type: ConfigChange
