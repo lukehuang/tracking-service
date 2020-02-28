@@ -152,7 +152,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <finalName>${project.artifactId}</finalName>
+                    <finalName>tracking-service</finalName>
                 </configuration>
                 <executions>
                     <execution>
